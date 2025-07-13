@@ -1,0 +1,28 @@
+.menu {
+  flex-grow: 1;
+
+  width: fit-content;
+  height: 100%;
+  margin: 2rem calc(2rem * 210 / 297);
+  display: flex;
+  justify-content: center;
+}
+
+.menu-container {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 210/297;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1500px;
+
+  transition: transform 0.8s ease-in-out;
+}
+
+.menu.mobile .menu-container.desktop {
+  display: none;
+}
+.menu.desktop .menu-container.mobile {
+  display: none;
+}
