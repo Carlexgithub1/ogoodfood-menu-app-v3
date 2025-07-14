@@ -213,6 +213,6 @@
 <div class="container">
   <Header />
   <Menu {MenuManifest} {PageDisplayMode} {PageWidth} />
-  <h4>Current page: {CurrentPage} / {PageCount}</h4>
+  <!-- <h4>Current page: {CurrentPage} / {PageCount}</h4> -->
   <Footer {CurrentPage} {PageCount} {OnBtnClicked} />
 </div>
