@@ -119,13 +119,13 @@
     switch (DeviceType) {
       case "desktop":
         CloseMenu();
+        UpdatePageWidth();
         const NewPageDisplayMode = GetPageDisplayMode(
           window.innerWidth,
           PageWidth
         );
         console.log("New display resize page mode: ", NewPageDisplayMode);
         PageDisplayMode = NewPageDisplayMode;
-
         const MenuContainer = document.querySelector(".menu");
         switch (PageDisplayMode) {
           case "mobile":
