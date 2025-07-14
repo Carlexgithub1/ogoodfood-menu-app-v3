@@ -3,7 +3,7 @@
   "short_name": "MENU-OGF",
   "description": "Découvrez tous les bons plats qu'on vous propose chez O'Good Food. Explorez notre menu ici.",
   "theme_color": "#000000",
-  "scope": "/pwa/",
+  "scope": "/web/",
   "lang": "fr",
   "display": "fullscreen",
   "orientation": "portrait",
