@@ -1,18 +1,31 @@
 .menu-page {
+  /* display: none; */
   position: absolute;
   height: 100%;
   aspect-ratio: 210/297;
+
+  border-radius: 0 0.5rem 0.5rem 0;
+  overflow: hidden;
 
   top: 0;
   left: 0;
 
   transform-origin: center left;
+  transform: rotateY(0deg);
+  transition: transform 0.5s ease-in-out;
+}
 
-  animation: flip-right 0.8s ease-in-out forwards;
+.menu-page.hidden {
+  display: none;
+}
+.menu-page.cover {
+  display: block;
 }
 
 .menu-page.flipped {
-  animation: flip-left 0.8s ease-in-out forwards;
+  transform: rotateY(-180deg);
+  transition: transform 0.5s ease-in-out;
+  /* animation: flip-left 0.8s ease-in-out forwards; */
 }
 
 /* Keyframes */

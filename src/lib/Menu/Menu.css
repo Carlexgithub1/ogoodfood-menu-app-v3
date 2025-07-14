@@ -6,6 +6,8 @@
   margin: 2rem calc(2rem * 210 / 297);
   display: flex;
   justify-content: center;
+
+  /* display: none; */
 }
 
 .menu-container {
@@ -17,7 +19,13 @@
   align-items: center;
   perspective: 1500px;
 
-  transition: transform 0.8s ease-in-out;
+  /* transition: transform 0.8s ease-in-out; */
+
+  /* display: none; */
+}
+
+.menu-container.mobile {
+  margin: 1rem;
 }
 
 .menu.mobile .menu-container.desktop {

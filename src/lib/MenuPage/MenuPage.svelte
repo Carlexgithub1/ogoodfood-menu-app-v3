@@ -4,7 +4,9 @@
 
   const { id, images, DeviceMode, flipped } = $props();
   const MenuPageId = `menu-page-${DeviceMode}-${id}`;
-  const MenuPageClass = `menu-page ${flipped ? "flipped" : ""}`;
+  const MenuPageClass =
+    `menu-page ${flipped ? "flipped" : ""}` +
+    `${id === 1 ? "cover" : "hidden"}`;
   const MenuPageZIndex = GetZIndexFromId(id);
 
   function GetZIndexFromId(id) {

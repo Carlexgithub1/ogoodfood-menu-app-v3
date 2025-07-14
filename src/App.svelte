@@ -29,8 +29,12 @@
   // Event listeners
 
   window.addEventListener("custom:manifest-loaded", HandleOnManifestLoaded);
-  window.addEventListener("resize", UpdatePageDisplayMode);
   window.addEventListener("keydown", HandleOnKeyboardPressed);
+  window.addEventListener("resize", UpdatePageDisplayMode);
+  window.addEventListener("", function (event) {
+    console.log(event);
+    // event.preventDefault();
+  });
 
   // Navigation
 
@@ -48,15 +52,26 @@
       }
 
       const page = GetMenuPageHTMLElement(CurrentPage);
-      page.classList.add("flipped");
+      const NextPage = GetMenuPageHTMLElement(CurrentPage + 1);
+      const PrevPage = GetMenuPageHTMLElement(CurrentPage - 1);
 
+      if (NextPage) NextPage.classList.remove("hidden");
       const zIndex = Number(page.style.zIndex);
       const NewZIndex = zIndex * -1;
+      page.style.zIndex = String(NewZIndex);
       setTimeout(() => {
-        page.style.zIndex = String(NewZIndex);
-      }, 100);
+        page.classList.add("flipped");
+      }, 10);
 
-      CurrentPage++;
+      setTimeout(() => {
+        if (PageDisplayMode === "mobile") {
+          page.classList.add("hidden");
+          console.log("Page flipped: ", CurrentPage, page);
+        } else if (PrevPage) {
+          PrevPage.classList.add("hidden");
+        }
+        CurrentPage++;
+      }, 500);
     }
   }
   function GoToPreviousPage() {
@@ -72,14 +87,43 @@
       }
     }
     if (CurrentPage > 1) {
+      const PrevPage = GetMenuPageHTMLElement(CurrentPage);
       const page = GetMenuPageHTMLElement(CurrentPage - 1);
-      page.classList.remove("flipped");
+      const NextPage = GetMenuPageHTMLElement(CurrentPage - 2);
 
-      const zIndex = Number(page.style.zIndex);
-      const NewZIndex = zIndex * -1;
+      if (PageDisplayMode === "mobile") {
+        page.classList.remove("hidden");
+        page.style.display = "block";
+      }
+      if (NextPage) {
+        NextPage.classList.remove("hidden");
+      }
+
+      // setTimeout(() => {
+      //   if (PageDisplayMode === "mobile") {
+      //     // page.classList.add("hidden");
+      //     // page.style.display = "none";
+      //   } else if (NextPage) {
+      //     NextPage.classList.remove("hidden");
+      //     NextPage.style.display = "block";
+      //   }
+      // }, 500);
+
       setTimeout(() => {
+        page.classList.remove("flipped");
+      }, 10);
+
+      setTimeout(() => {
+        const zIndex = Number(page.style.zIndex);
+        const NewZIndex = zIndex * -1;
         page.style.zIndex = String(NewZIndex);
-      }, 400);
+        console.log("Swintching z index from: ", zIndex, " to: ", NewZIndex);
+      }, 250);
+
+      setTimeout(() => {
+        // page.style.zIndex = String(NewZIndex);
+        if (PrevPage) PrevPage.classList.add("hidden");
+      }, 800);
 
       CurrentPage--;
     }
@@ -107,6 +151,8 @@
     ).matches;
 
     const DeviceType = isDesktop ? "desktop" : "mobile";
+    console.log("Device type: ", DeviceType);
+
     return DeviceType;
   }
 
@@ -115,17 +161,19 @@
     return PageDisplayMode;
   }
 
-  function UpdatePageDisplayMode() {
+  function UpdatePageDisplayMode(event) {
+    event.preventDefault();
+
     switch (DeviceType) {
       case "desktop":
         CloseMenu();
-        UpdatePageWidth();
         const NewPageDisplayMode = GetPageDisplayMode(
           window.innerWidth,
           PageWidth
         );
         console.log("New display resize page mode: ", NewPageDisplayMode);
         PageDisplayMode = NewPageDisplayMode;
+
         const MenuContainer = document.querySelector(".menu");
         switch (PageDisplayMode) {
           case "mobile":
@@ -155,10 +203,12 @@
 
   function HandleOnManifestLoaded() {
     DeviceType = GetDeviceType();
-
     setTimeout(function () {
       UpdatePageWidth();
       PageDisplayMode = GetPageDisplayMode(window.innerWidth, PageWidth);
+
+      console.log("New display mode: ", PageDisplayMode);
+
       const MenuContainer = document.querySelector(".menu");
       switch (PageDisplayMode) {
         case "mobile":
@@ -182,9 +232,10 @@
   }
 
   function UpdatePageWidth() {
-    const page = document.querySelector(".menu");
+    const page = document.querySelector(".menu-page");
     const NewPageWidth = page.clientWidth;
     PageWidth = NewPageWidth;
+    console.log("Page width: ", PageWidth);
   }
 
   function HandleOnKeyboardPressed(event) {

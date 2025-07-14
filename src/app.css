@@ -1,11 +1,12 @@
 .container {
   width: 100vw;
-  height: 100dvh;
+  height: 100svh;
+  /* height: 700px; */
+  /* max-height: 1920px; */
 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow: hidden;
 
   align-items: center;
 }

@@ -30,10 +30,11 @@
   }
 </script>
 
-<section class={`menu ${PageDisplayMode === 1 ? "mobile" : "desktop"}`}>
+{#snippet Pages()}
   {#if MenuManifest}
     <!-- <MenuPage id=/> -->
     <div id="menu-container-desktop" class="menu-container desktop">
+      <!-- <img src="/menu/image4.jpg" alt="Image" /> -->
       {#each GetMenuPages(MenuManifest.images, "desktop") as page, index}
         <MenuPage
           id={index + 1}
@@ -57,6 +58,10 @@
   {:else}
     <img class="menu-page" src="/menu/blank.jpg" alt="Empty menu page" />
   {/if}
+{/snippet}
+
+<section class={`menu ${PageDisplayMode === 1 ? "mobile" : "desktop"}`}>
+  {@render Pages()}
 </section>
 
 <style>
